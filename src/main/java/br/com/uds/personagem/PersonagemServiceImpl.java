@@ -1,4 +1,3 @@
-
 package br.com.uds.personagem;
 
 import org.springframework.beans.factory.annotation.Autowired;
