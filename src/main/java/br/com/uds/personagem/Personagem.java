@@ -1,21 +1,25 @@
 package br.com.uds.personagem;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public abstract class Personagem {
+public class Personagem {
 
+    @ApiModelProperty(hidden = true)
     private final UUID id;
 
-    private String nome;
-
+    @ApiModelProperty(hidden = true)
     private final LocalDateTime dataCriacao;
+
+    private String nome;
 
     private int nivelDePoder;
 
     private int pontosDeVida;
 
-    protected Personagem() {
+    private Personagem() {
         this.id = UUID.randomUUID();
         this.dataCriacao = LocalDateTime.now();
     }
@@ -53,6 +57,10 @@ public abstract class Personagem {
 
     public int getPontosDeVida() {
         return pontosDeVida;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     @Override

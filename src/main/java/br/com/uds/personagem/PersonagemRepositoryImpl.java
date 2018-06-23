@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Component
 public class PersonagemRepositoryImpl implements PersonagemRepository {
@@ -18,6 +19,22 @@ public class PersonagemRepositoryImpl implements PersonagemRepository {
 
     public Set<Personagem> findAll() {
         return personagens;
+    }
+
+    @Override
+    public Personagem findOne(UUID id) {
+        for (Personagem personagem: personagens) {
+            if(personagem.getId().equals(id)) {
+                return personagem;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void delete(UUID id) {
+        Personagem personagem = this.findOne(id);
+        this.personagens.remove(personagem);
     }
 
 }

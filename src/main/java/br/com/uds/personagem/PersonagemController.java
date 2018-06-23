@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/personagens")
@@ -15,10 +16,10 @@ public class PersonagemController {
     private PersonagemService personagemService;
 
     @PostMapping
-    public ResponseEntity criar(@RequestBody Ryu ryu) {
-        Personagem personagem = personagemService.criar(ryu);
+    public ResponseEntity criar(@RequestBody Personagem personagem) {
+        Personagem personagemCriado = this.personagemService.criar(personagem);
         return new ResponseEntity(
-                personagem
+                personagemCriado
                         .toString(),
                 HttpStatus.CREATED);
     }
@@ -26,6 +27,25 @@ public class PersonagemController {
     @GetMapping
     public Set<Personagem> listar() {
         return this.personagemService.listar();
+    }
+
+    @GetMapping("/findBy")
+    public Personagem obter(@RequestParam("id")UUID id) {
+        return this.personagemService.obter(id);
+    }
+
+    @DeleteMapping
+    public ResponseEntity remover(@RequestParam("id")UUID id) {
+        this.personagemService.remover(id);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping
+    public ResponseEntity editar(
+            @RequestParam("id") UUID id,
+            @RequestBody Personagem personagem) {
+        this.personagemService.editar(id, personagem);
+        return new ResponseEntity("Editado com sucesso!", HttpStatus.OK);
     }
 
 }
